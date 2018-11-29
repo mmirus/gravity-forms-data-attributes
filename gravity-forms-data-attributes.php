@@ -9,6 +9,7 @@ Version: 1.0.0
 GitHub Plugin URI: https://github.com/mmirus/gravity-forms-data-attributes
  */
 
+// add "Enable Data Attributes" and "Data Attribute Names" settings
 add_action('gform_field_standard_settings', function ($position, $form_id) {
     if ($position === 1350) :
     ?>
@@ -63,15 +64,15 @@ add_action('gform_editor_js', function () {
             jQuery('#field_enable_data_attrs_value').attr('checked', field.enableDataAttrsField == true);
             ToggleDataAttrs(true);
             jQuery('#field_data_attrs').val(field.dataAttrsField);
-            
+
             if (['checkbox', 'radio'].includes(field.type)) return;
-            
+
             var dataAttrsInputContainer = jQuery('#gform_data_attr_inputs');
 
             var dataAttrs = field.dataAttrsField
-            
+
             if (!dataAttrs) return '';
-            
+
             dataAttrs = dataAttrs.split("\n").map(function(name) {
                 return {
                     name: name,
@@ -85,7 +86,7 @@ add_action('gform_editor_js', function () {
 
             dataAttrsInputContainer.append(inputs);
         });
-        
+
         // save data attribute values (general)
         jQuery('#gform_data_attr_inputs').on('input propertychange', '.field-data-attr', function () {
             var $this = jQuery(this);
@@ -102,16 +103,16 @@ add_action('gform_editor_js', function () {
             field = GetSelectedField();
             field.choices[i][$this.data('attrName')] = $this.val();
         });
-        
+
         // add data attribute fields to checkbox / radio choices
         gform.addFilter('gform_append_field_choice_option', function (str, field, i) {
             var inputType = GetInputType(field);
             var custom = field.choices[i].custom ? field.choices[i].custom : '';
-            
+
             var dataAttrs = field.dataAttrsField
-            
+
             if (!dataAttrs) return '';
-            
+
             dataAttrs = dataAttrs.split("\n").map(function(name) {
                 return {
                     name: name,
@@ -129,10 +130,69 @@ add_action('gform_editor_js', function () {
         });
     </script>
 <?php
-
 });
 
 add_filter('gform_tooltips', function ($tooltips) {
     $tooltips['form_field_data_attrs'] = "<h6>Data Attribute Names</h6><p>Enter the names of the data attributes you wish to enable, one per line.</p><p>You must save the form after changing this setting.</p>";
     return $tooltips;
 });
+
+// add data attributes to inputs that don't have multiple choices
+add_filter('gform_field_content', function ($content, $field, $value, $lead_id, $form_id) {
+    if (is_admin() || !empty($field->choices) || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField) {
+        return $content;
+    }
+
+    $attrs = preg_split("/\r\n|\n|\r/", $field->dataAttrsField);
+
+    $attrHtml = '';
+
+    foreach ($attrs as $attr) {
+        if (!property_exists($field, $attr)) {
+            continue;
+        }
+
+        $value = $field[$attr];
+        $attrHtml .= " data-{$attr}='{$value}'";
+    }
+
+    if ($attrHtml) {
+        $content = str_replace(' name=', "$attrHtml name=", $content);
+    }
+
+    return $content;
+}, 10, 5);
+
+// add data attributes to inputs that have multiple choices (checkboxes, drop downs, etc.)
+add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $choice, $field, $value) {
+    if (is_admin() || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField) {
+        return $choice_markup;
+    }
+
+    $attrs = preg_split("/\r\n|\n|\r/", $field->dataAttrsField);
+
+    $attrHtml = '';
+
+    foreach ($attrs as $attr) {
+        if (!array_key_exists($attr, $choice)) {
+            continue;
+        }
+
+        $value = $choice[$attr];
+        $attrHtml .= " data-{$attr}='{$value}'";
+    }
+
+    if ($attrHtml) {
+        switch ($field->type) {
+            case 'select':
+                $choice_markup = str_replace('<option ', "<option $attrHtml", $choice_markup);
+                break;
+
+            default:
+                $choice_markup = str_replace(' name=', "$attrHtml name=", $choice_markup);
+                break;
+        }
+    }
+
+    return $choice_markup;
+}, 10, 4);
