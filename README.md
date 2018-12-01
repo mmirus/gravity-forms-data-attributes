@@ -2,6 +2,7 @@
 
 - [Usage](#usage)
 - [Installation](#installation)
+- [Contributing](#contributing)
 - [Screenshots](#screenshots)
 
 This plugin allows you to add custom data attributes to Gravity Forms fields.
@@ -29,6 +30,18 @@ There are three options for installing this plugin:
 1. With composer from [Packagist](https://packagist.org/packages/mmirus/gravity-forms-data-attributes): `composer require mmirus/gravity-forms-data-attributes`
 2. With [GitHub Updater](https://github.com/afragen/github-updater)
 3. By downloading the latest release ZIP from this repository and installing it like any normal WordPress plugin
+
+## Contributing
+
+To work on this project (for yourself or to contribute a PR):
+
+1. Clone this repo
+2. Run `composer install`
+3. Run `yarn` or `npm install`
+
+And you should be good to go.
+
+Pre-commit linting is enforced (see `.eslintrc.js` and `.stylelintrc.js` for scripts and styles; PHP users PSR-2).
 
 ## Screenshots
 

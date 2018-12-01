@@ -7,16 +7,16 @@
 
 // Show/hide the "Data Attribute Names" setting and the settings for individual data attributes
 function ToggleDataAttrs(isInit) {
-  var speed = isInit ? "" : "slow";
+  var speed = isInit ? '' : 'slow';
 
-  if (jQuery("#field_enable_data_attrs_value").is(":checked")) {
-    jQuery("#gform_data_attrs, .field-choice-data-attr-wrapper").show(speed);
+  if (jQuery('#field_enable_data_attrs_value').is(':checked')) {
+    jQuery('#gform_data_attrs, .field-choice-data-attr-wrapper').show(speed);
 
-    SetFieldProperty("enableDataAttrsField", true);
+    SetFieldProperty('enableDataAttrsField', true);
   } else {
-    jQuery("#gform_data_attrs, .field-choice-data-attr-wrapper").hide(speed);
-    SetFieldProperty("enableDataAttrsField", false);
-    SetFieldProperty("dataAttrsField", "");
+    jQuery('#gform_data_attrs, .field-choice-data-attr-wrapper').hide(speed);
+    SetFieldProperty('enableDataAttrsField', false);
+    SetFieldProperty('dataAttrsField', '');
   }
 }
 
@@ -25,46 +25,46 @@ function ToggleDataAttrs(isInit) {
  * 1. Initialize "Enable Data Attributes" and "Data Attribute Names" settings
  * 2. If the field doesn't have choices, add the field for each data attribute
  */
-jQuery(document).on("gform_load_field_settings", function(event, field, form) {
-  jQuery("#field_enable_data_attrs_value").attr(
-    "checked",
+jQuery(document).on('gform_load_field_settings', function(event, field) {
+  jQuery('#field_enable_data_attrs_value').attr(
+    'checked',
     field.enableDataAttrsField == true
   );
 
-  var dataAttrsInputContainer = jQuery("#gform_data_attr_inputs");
-  dataAttrsInputContainer.html("");
+  var dataAttrsInputContainer = jQuery('#gform_data_attr_inputs');
+  dataAttrsInputContainer.html('');
 
-  jQuery("#field_data_attrs").val(field.dataAttrsField);
+  jQuery('#field_data_attrs').val(field.dataAttrsField);
 
   var dataAttrs = field.dataAttrsField;
 
   if (field.choices || !dataAttrs)
     return ToggleDataAttrs(!field.enableDataAttrsField);
 
-  dataAttrs = dataAttrs.split("\n").map(function(name) {
+  dataAttrs = dataAttrs.split('\n').map(function(name) {
     return {
       name: name,
-      value: field[name] || "",
+      value: field[name] || '',
     };
   });
 
   var inputs = dataAttrs
     .map(function(dataAttr) {
       return (
-        "<br><label class='section_label'>" +
+        '<br><label class=\'section_label\'>' +
         dataAttr.name +
-        "</label><input type='text' id='" +
+        '</label><input type=\'text\' id=\'' +
         dataAttr.name +
-        "' value='" +
+        '\' value=\'' +
         dataAttr.value +
-        "' class='field-" +
+        '\' class=\'field-' +
         dataAttr.name +
-        " field-data-attr' data-attr-name='" +
+        ' field-data-attr\' data-attr-name=\'' +
         dataAttr.name +
-        "' /><br>"
+        '\' /><br>'
       );
     })
-    .join("");
+    .join('');
 
   dataAttrsInputContainer.html(inputs);
 
@@ -72,59 +72,59 @@ jQuery(document).on("gform_load_field_settings", function(event, field, form) {
 });
 
 // Add the field for each data attribute when fields choices are rendered
-gform.addFilter("gform_append_field_choice_option", function(str, field, i) {
+gform.addFilter('gform_append_field_choice_option', function(str, field, i) {
   var inputType = GetInputType(field);
 
   var dataAttrs = field.dataAttrsField;
 
-  if (!dataAttrs) return "";
+  if (!dataAttrs) return '';
 
-  dataAttrs = dataAttrs.split("\n").map(function(name) {
+  dataAttrs = dataAttrs.split('\n').map(function(name) {
     return {
       name: name,
-      value: field.choices[i][name] || "",
+      value: field.choices[i][name] || '',
     };
   });
 
   var inputs = dataAttrs
     .map(function(dataAttr) {
-      var id = inputType + "_choice_" + dataAttr.name + "_" + i;
+      var id = inputType + '_choice_' + dataAttr.name + '_' + i;
       return (
-        "<label>" +
+        '<label>' +
         dataAttr.name +
-        " <input type='text' id='" +
+        ' <input type=\'text\' id=\'' +
         id +
-        "' value='" +
+        '\' value=\'' +
         dataAttr.value +
-        "' class='field-choice-input field-choice-" +
+        '\' class=\'field-choice-input field-choice-' +
         dataAttr.name +
-        " field-choice-data-attr' data-attr-name='" +
+        ' field-choice-data-attr\' data-attr-name=\'' +
         dataAttr.name +
-        "' /></label>"
+        '\' /></label>'
       );
     })
-    .join("");
+    .join('');
 
-  return "<div class='field-choice-data-attr-wrapper'>" + inputs + "</div>";
+  return '<div class=\'field-choice-data-attr-wrapper\'>' + inputs + '</div>';
 });
 
 // save data attribute values (general / non-choices)
-jQuery(document).on("input propertychange", ".field-data-attr", function() {
+jQuery(document).on('input propertychange', '.field-data-attr', function() {
   var $this = jQuery(this);
 
   var field = GetSelectedField();
-  field[$this.data("attrName")] = $this.val();
+  field[$this.data('attrName')] = $this.val();
 });
 
 // save data attribute values (choices)
 jQuery(document).on(
-  "input propertychange",
-  ".field-choice-data-attr",
+  'input propertychange',
+  '.field-choice-data-attr',
   function() {
     var $this = jQuery(this);
-    var i = $this.closest("li.field-choice-row").data("index");
+    var i = $this.closest('li.field-choice-row').data('index');
 
     var field = GetSelectedField();
-    field.choices[i][$this.data("attrName")] = $this.val();
+    field.choices[i][$this.data('attrName')] = $this.val();
   }
 );

@@ -11,11 +11,15 @@
     "lint": "npm run -s lint:scripts && npm run -s lint:styles",
     "lint:scripts": "eslint assets",
     "lint:styles": "stylelint \"assets/*.css\"",
-    "test": "npm run -s lint"
+    "test": "npm run -s lint && composer test"
   },
+  "pre-commit": [
+    "test"
+  ],
   "devDependencies": {
     "eslint": "^5.9.0",
     "eslint-plugin-import": "^2.14.0",
+    "pre-commit": "^1.2.2",
     "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.2.0"
   }

@@ -19,7 +19,7 @@ add_action('admin_enqueue_scripts', function () {
 // Add "Enable Data Attributes" and "Data Attribute Names" settings
 add_action('gform_field_standard_settings', function ($position, $form_id) {
     if ($position === 1350) :
-    ?>
+        ?>
         <li class="enable_data_attrs_setting field_setting">
             <input type="checkbox" id="field_enable_data_attrs_value" onclick="ToggleDataAttrs();" />
             <label for="field_enable_data_attrs_value" class="inline">
@@ -38,7 +38,7 @@ add_action('gform_field_standard_settings', function ($position, $form_id) {
                 <div id="gform_data_attr_inputs"></div>
             </div>
         </li>
-    <?php
+        <?php
     endif;
 }, 10, 2);
 
@@ -56,5 +56,5 @@ add_action('gform_editor_js', function () {
             fieldSettings[i] += ", .enable_data_attrs_setting, .data_attrs_setting";
         }
     </script>
-<?php
+    <?php
 });

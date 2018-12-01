@@ -1,8 +1,12 @@
 module.exports = {
   root: true,
-  extends: "eslint:recommended",
+  extends: 'eslint:recommended',
   globals: {
     wp: true,
+    SetFieldProperty: true,
+    gform: true,
+    GetInputType: true,
+    GetSelectedField: true,
   },
   env: {
     node: true,
@@ -18,27 +22,27 @@ module.exports = {
       objectLiteralDuplicateProperties: false,
     },
     ecmaVersion: 2017,
-    sourceType: "module",
+    sourceType: 'module',
   },
-  plugins: ["import"],
+  plugins: ['import'],
   settings: {
-    "import/core-modules": [],
-    "import/ignore": [
-      "node_modules",
-      "\\.(coffee|scss|css|less|hbs|svg|json)$",
+    'import/core-modules': [],
+    'import/ignore': [
+      'node_modules',
+      '\\.(coffee|scss|css|less|hbs|svg|json)$',
     ],
   },
   rules: {
-    "no-console": 0,
-    quotes: ["error", "single"],
-    "comma-dangle": [
-      "error",
+    'no-console': 0,
+    quotes: ['error', 'single'],
+    'comma-dangle': [
+      'error',
       {
-        arrays: "always-multiline",
-        objects: "always-multiline",
-        imports: "always-multiline",
-        exports: "always-multiline",
-        functions: "ignore",
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'ignore',
       },
     ],
   },
