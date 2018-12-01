@@ -1,0 +1,22 @@
+{
+  "name": "gravity-forms-data-attributes",
+  "version": "1.0.0",
+  "description": "Add custom data attributes to Gravity Forms fields.",
+  "private": true,
+  "repository": "git@github.com:mmirus/gravity-forms-data-attributes.git",
+  "author": "Matt Mirus <matt@mattmirus.com>",
+  "homepage": "https://github.com/mmirus/gravity-forms-data-attributes",
+  "license": "MIT",
+  "scripts": {
+    "lint": "npm run -s lint:scripts && npm run -s lint:styles",
+    "lint:scripts": "eslint assets",
+    "lint:styles": "stylelint \"assets/*.css\"",
+    "test": "npm run -s lint"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-plugin-import": "^2.14.0",
+    "stylelint": "^9.9.0",
+    "stylelint-config-standard": "^18.2.0"
+  }
+}

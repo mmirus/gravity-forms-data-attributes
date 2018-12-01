@@ -1,6 +1,6 @@
 {
   "name": "mmirus/gravity-forms-data-attributes",
-  "description": "Display the content of a field in the title bar of your Advanced Custom Fields flexible content sections.",
+  "description": "Add custom data attributes to Gravity Forms fields.",
   "type": "wordpress-plugin",
   "license": "MIT",
   "homepage": "https://github.com/mmirus/gravity-forms-data-attributes",
@@ -13,14 +13,13 @@
   ],
   "keywords": [
     "wordpress",
-    "advanced custom fields",
-    "acf"
+    "gravity forms"
   ],
   "support": {
     "issues": "https://github.com/mmirus/gravity-forms-data-attributes/issues"
   },
   "require": {
-    "php": ">=5.3.0",
+    "php": ">=7.1.0",
     "composer/installers": "^1.6"
   }
 }
