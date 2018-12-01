@@ -60,6 +60,7 @@ add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $ch
     if ($attrHtml) {
         switch ($field->type) {
             case 'select':
+            case 'multiselect':
                 $choice_markup = str_replace('<option ', "<option $attrHtml", $choice_markup);
                 break;
 
