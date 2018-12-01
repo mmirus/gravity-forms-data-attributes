@@ -41,7 +41,7 @@ To work on this project (for yourself or to contribute a PR):
 
 And you should be good to go.
 
-Pre-commit linting is enforced (see `.eslintrc.js` and `.stylelintrc.js` for scripts and styles; PHP users PSR-2).
+Pre-commit linting is enforced (see `.eslintrc.js` and `.stylelintrc.js` for scripts and styles; PHP uses PSR-2).
 
 ## Screenshots
 
