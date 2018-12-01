@@ -1,0 +1,14 @@
+.gfield_data_attr_note {
+  font-style: italic;
+}
+
+.field-choice-data-attr-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 35px;
+}
+
+#field_settings .field-choice-data-attr-wrapper label {
+  width: 155px;
+  margin: 10px 0 0;
+}
