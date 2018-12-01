@@ -1,6 +1,6 @@
 {
   "name": "gravity-forms-data-attributes",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Add custom data attributes to Gravity Forms fields.",
   "private": true,
   "repository": "git@github.com:mmirus/gravity-forms-data-attributes.git",
