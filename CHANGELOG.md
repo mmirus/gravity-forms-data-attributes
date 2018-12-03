@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 / 2018-12-3
+
+- Replace `pre-commit` with `husky`
+
 ## 1.0.3 / 2018-12-1
 
 - Add PHP linting
