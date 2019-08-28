@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5 / 2019-08-28
+
+- Update dependencies to fix vulnerabilities
+
 ## 1.0.4 / 2018-12-3
 
 - Replace `pre-commit` with `husky`
