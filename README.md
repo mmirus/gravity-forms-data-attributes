@@ -7,7 +7,11 @@
 
 This plugin allows you to add custom data attributes to Gravity Forms fields.
 
-It should work with all of the Standard field types and any of the Advanced field types that only have one input field (e.g., Email but not Address).
+It should work with:
+
+- all of the Standard field types
+- any of the Advanced field types that only have one input field (e.g., Email but not Address)
+- the List advanced field type, including with multiple columns (thanks @reddo!).
 
 For fields with choices, such as checkboxes, you can assign separate values for each data attribute for each choice (the UI for this is ugly right now 🤷‍).
 

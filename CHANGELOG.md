@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 / 2019-09-24
+
+- Add support for multiple columns using List field type (thanks @reddo!)
+
 ## 1.0.5 / 2019-08-28
 
 - Update dependencies to fix vulnerabilities
