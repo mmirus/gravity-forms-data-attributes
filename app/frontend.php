@@ -8,10 +8,16 @@ function dataAttrNamesToArray($attrs)
     return preg_split("/\r\n|\n|\r/", $attrs);
 }
 
+// test is the field has data attributes
+function fieldHasDataAttributes($field)
+{
+    return property_exists($field, 'enableDataAttrsField') && $field->enableDataAttrsField;
+}
+
 // Add data attributes to inputs that don't have multiple choices
 add_filter('gform_field_content', function ($content, $field, $value, $lead_id, $form_id) {
-    // Bail if: in the admin, the field has choices, or the field doesn't have data attributes enabled
-    if (is_admin() || !empty($field->choices) || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField) {
+    // Bail if: in the admin, no data attributes, or the field has choices
+    if (is_admin() || !fieldHasDataAttributes($field) || !empty($field->choices)) {
         return $content;
     }
 
@@ -38,8 +44,8 @@ add_filter('gform_field_content', function ($content, $field, $value, $lead_id, 
 
 // Add data attributes to inputs that have multiple choices (checkboxes, drop downs, etc.)
 add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $choice, $field, $value) {
-    // Bail if: in the admin or the field doesn't have data attributes enabled
-    if (is_admin() || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField) {
+    // Bail if: in the admin or no data attributes
+    if (is_admin() || !fieldHasDataAttributes($field)) {
         return $choice_markup;
     }
 
@@ -75,13 +81,8 @@ add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $ch
 
 // Add data attributes to multi-column list fields
 add_filter('gform_column_input_content', function ($input, $input_info, $field, $text) {
-    /**
-     * Bail if:
-     * - in the admin
-     * - or the field doesn't have data attributes enabled
-     * - or the field isn't using multiple columns
-     */
-    if (is_admin() || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField || empty($field->choices)) {
+    // Bail if: in the admin, no data attributes, or the field isn't using multiple columns
+    if (is_admin() || !fieldHasDataAttributes($field) || empty($field->choices)) {
         return $input;
     }
 
