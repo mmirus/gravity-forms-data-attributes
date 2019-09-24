@@ -115,16 +115,7 @@ add_filter( 'gform_column_input_content', function ($input, $input_info, $field,
     }
 
     if ($attrHtml) {
-        switch ($field->type) {
-            case 'select':
-            case 'multiselect':
-                $input = str_replace('<option ', "<option $attrHtml", $input);
-                break;
-
-            default:
-                $input = str_replace(' name=', "$attrHtml name=", $input);
-                break;
-        }
+        $input = str_replace(' name=', "$attrHtml name=", $input);
     }
 
     return $input;
