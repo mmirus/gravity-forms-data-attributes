@@ -100,7 +100,7 @@ add_filter( 'gform_column_input_content', function ($input, $input_info, $field)
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
 
-    consoleLog($attrs);
+    consoleLog($attrs, $input_info, $field);
 
     $attrHtml = '';
 
