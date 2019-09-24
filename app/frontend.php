@@ -36,8 +36,6 @@ add_filter('gform_field_content', function ($content, $field, $value, $lead_id, 
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
 
-    consoleLog($attrs, $field);
-
     $attrHtml = '';
 
     foreach ($attrs as $attr) {
@@ -66,8 +64,6 @@ add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $ch
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
 
-    consoleLog($attrs);
-
     $attrHtml = '';
 
     foreach ($attrs as $attr) {
@@ -95,3 +91,41 @@ add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $ch
 
     return $choice_markup;
 }, 10, 4);
+
+add_filter( 'gform_column_input_content', function ($input, $input_info, $field, $column_name, $value, $form_id) {
+    // Bail if: in the admin or the field doesn't have data attributes enabled
+    if (is_admin() || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField) {
+        return $input;
+    }
+
+    $attrs = dataAttrNamesToArray($field->dataAttrsField);
+
+    consoleLog($attrs);
+
+    $attrHtml = '';
+
+    foreach ($attrs as $attr) {
+        // skip if not set
+        if (!array_key_exists($attr, $input_info)) {
+            continue;
+        }
+
+        $value = $input_info[$attr];
+        $attrHtml .= " data-{$attr}='{$value}'";
+    }
+
+    if ($attrHtml) {
+        switch ($field->type) {
+            case 'select':
+            case 'multiselect':
+                $input = str_replace('<option ', "<option $attrHtml", $input);
+                break;
+
+            default:
+                $input = str_replace(' name=', "$attrHtml name=", $input);
+                break;
+        }
+    }
+
+    return $input;
+}, 10, 5 );
