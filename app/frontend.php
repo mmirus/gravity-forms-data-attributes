@@ -104,19 +104,19 @@ add_filter( 'gform_column_input_content', function ($input, $input_info, $field,
 
     $attrHtml = '';
 
-    foreach ($attrs as $attr) {
-        // skip if not set
-        if (!array_key_exists($attr, $input_info)) {
-            continue;
-        }
+    // foreach ($attrs as $attr) {
+    //     // skip if not set
+    //     if (!array_key_exists($attr, $input_info)) {
+    //         continue;
+    //     }
 
-        $value = $input_info[$attr];
-        $attrHtml .= " data-{$attr}='{$value}'";
-    }
+    //     $value = $input_info[$attr];
+    //     $attrHtml .= " data-{$attr}='{$value}'";
+    // }
 
-    if ($attrHtml) {
-        $input = str_replace(' name=', "$attrHtml name=", $input);
-    }
+    // if ($attrHtml) {
+    //     $input = str_replace(' name=', "$attrHtml name=", $input);
+    // }
 
     return $input;
 }, 10, 5 );
