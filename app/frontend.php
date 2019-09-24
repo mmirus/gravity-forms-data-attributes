@@ -100,8 +100,6 @@ add_filter( 'gform_column_input_content', function ($input, $input_info, $field,
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
 
-    consoleLog($attrs, $field["choices"], $text);
-
     $attrHtml = '';
 
     foreach ($attrs as $attr) {
@@ -112,12 +110,15 @@ add_filter( 'gform_column_input_content', function ($input, $input_info, $field,
                 break;
             }
         }
+
+        consoleLog($field["choices"], $text);
+
         // skip if not set
-        if (!array_key_exists($attr, $item[$text])) {
+        if (!array_key_exists($attr, $item)) {
             continue;
         }
 
-        $value = $item[$text][$attr];
+        $value = $item[$attr];
         $attrHtml .= " data-{$attr}='{$value}'";
     }
 
