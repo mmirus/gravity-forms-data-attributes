@@ -73,10 +73,15 @@ add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $ch
     return $choice_markup;
 }, 10, 4);
 
-// Add data attributes to list fields
+// Add data attributes to multi-column list fields
 add_filter('gform_column_input_content', function ($input, $input_info, $field, $text) {
-    // Bail if: in the admin or the field doesn't have data attributes enabled
-    if (is_admin() || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField) {
+    /**
+     * Bail if:
+     * - in the admin
+     * - or the field doesn't have data attributes enabled
+     * - or the field isn't using multiple columns
+     */
+    if (is_admin() || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField || empty($field->choices)) {
         return $input;
     }
 
@@ -86,7 +91,7 @@ add_filter('gform_column_input_content', function ($input, $input_info, $field, 
 
     foreach ($attrs as $attr) {
         $item = null;
-        foreach ($field['choices'] as $choice) {
+        foreach ($field->choices as $choice) {
             if ($text == $choice['text']) {
                 $item = $choice;
                 break;
