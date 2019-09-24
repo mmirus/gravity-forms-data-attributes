@@ -2,6 +2,25 @@
 
 namespace GFDA;
 
+function consoleLog(){
+    if(func_num_args() == 0){
+        return;
+    }
+
+    $tag = '';
+    for ($i = 0; $i < func_num_args(); $i++) {
+        $arg = func_get_arg($i);
+        if(!empty($arg)){
+            if (is_string($arg) && strtolower(substr($arg, 0, 4)) === 'tag-') {
+                $tag = substr($arg, 4);
+            } else {
+                $arg = json_encode($arg, JSON_HEX_TAG | JSON_HEX_AMP );
+                echo "<script>console.log('" . $tag . " " . $arg . "');</script>";
+            }
+        }
+    }
+}
+
 // Convert the value of the data attribute setting from a multi line string to an array
 function dataAttrNamesToArray($attrs)
 {
@@ -16,6 +35,8 @@ add_filter('gform_field_content', function ($content, $field, $value, $lead_id, 
     }
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
+
+    consoleLog($attrs);
 
     $attrHtml = '';
 
@@ -44,6 +65,8 @@ add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $ch
     }
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
+
+    consoleLog($attrs);
 
     $attrHtml = '';
 
