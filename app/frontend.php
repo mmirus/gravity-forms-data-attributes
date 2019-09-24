@@ -92,7 +92,7 @@ add_filter('gform_field_choice_markup_pre_render', function ($choice_markup, $ch
     return $choice_markup;
 }, 10, 4);
 
-add_filter( 'gform_column_input_content', function ($input, $input_info, $field) {
+add_filter( 'gform_column_input_content', function ($input, $input_info, $field, $text, $value) {
     // Bail if: in the admin or the field doesn't have data attributes enabled
     if (is_admin() || !property_exists($field, 'enableDataAttrsField') || !$field->enableDataAttrsField) {
         return $input;
@@ -100,7 +100,7 @@ add_filter( 'gform_column_input_content', function ($input, $input_info, $field)
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
 
-    consoleLog($attrs, $input_info, $field);
+    consoleLog($attrs, $input_info, $field, $text, $value);
 
     $attrHtml = '';
 
