@@ -36,7 +36,7 @@ add_filter('gform_field_content', function ($content, $field, $value, $lead_id, 
 
     $attrs = dataAttrNamesToArray($field->dataAttrsField);
 
-    consoleLog($attrs);
+    consoleLog($attrs, $field);
 
     $attrHtml = '';
 
